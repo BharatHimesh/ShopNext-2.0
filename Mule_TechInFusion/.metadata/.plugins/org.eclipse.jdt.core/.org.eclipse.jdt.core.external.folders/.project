@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>.org.eclipse.jdt.core.external.folders</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>.link0</name>
+			<type>2</type>
+			<location>C:/Softwares/MuleStudio/plugins/org.mule.tooling.server.3.4.0.ee_3.4.0.201305131832/mule/mule/per-app</location>
+		</link>
+		<link>
+			<name>.link1</name>
+			<type>2</type>
+			<location>C:/Softwares/MuleStudio/plugins/org.mule.tooling.server.3.4.0.ee_3.4.0.201305131832/mule/data-mapper</location>
+		</link>
+	</linkedResources>
+</projectDescription>

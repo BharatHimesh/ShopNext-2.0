@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/rfidassetzone/src/main/java/com/espertech/esper/example/rfidassetzone/RFIDMouseDragExample.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.espertech.esper.example.rfidassetzone.RFIDMouseDragExample"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="rfidassetzone"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dlog4j.configuration=file:C:\Softwares\esper-4.4.0\examples\rfidassetzone\etc\log4j.xml -Dcom.sun.management.jmxremote -Xms128m -Xmx128m -server -XX:+UseParNewGC"/>
+</launchConfiguration>

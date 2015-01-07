@@ -1,0 +1,9 @@
+1416477847014	Move compilation unit
+1416477930975	Rename type 'BillSubscriber'
+1416477966832	Rename type 'ItemCheckOutInput'
+1416478239646	Delete element
+1416486065026	Rename package 'com.esper.mule.websocket'
+1416558187655	Copy compilation unit
+1416558195861	Rename type 'CopyOfBillEventSubscriber'
+1416558304234	Rename field 'objectToJSON'
+1416558340633	Rename field 'objectToJSON'

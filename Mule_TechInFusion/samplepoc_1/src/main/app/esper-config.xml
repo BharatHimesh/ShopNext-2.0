@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esper-configuration 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		    xmlns="http://www.espertech.com/schema/esper"
+		    xsi:schemaLocation="http://www.espertech.com/schema/esper http://www.espertech.com/schema/esper/esper-configuration-4.0.xsd">
+
+	<event-type name="ItemEvent" class="com.esper.event.object.Item"/>
+
+	<event-type name="CheckOutEvent" class="com.esper.event.object.CheckOut"/>
+    
+    <event-type name="BillEvent" class="com.esper.event.object.Bill"/>
+    
+    <event-type name="AlertMessageOMEvent" class="com.esper.event.object.AlertMessageOM"/>
+    
+    <event-type name="AlertMessageCCEvent" class="com.esper.event.object.AlertMessageCC"/>
+    
+    <event-type name="TopBuyerListEvent" class="com.esper.event.object.TopBuyerList"/>
+    
+    <event-type name="TopSellingItemListEvent" class="com.esper.event.object.TopSellingItemList"/>
+    
+    <event-type name="SignInEvent" class="com.esper.event.object.SignIn"/>
+    
+    <event-type name="SignOutEvent" class="com.esper.event.object.SignOut"/>
+    
+    <event-type name="LowStockListEvent" class="com.esper.event.object.LowStockList"/>
+    
+    <event-type name="CustomerMovedIntoSegmentEvent" class="com.esper.event.object.CustomerMovedIntoSegment"/>
+    
+    <event-type name="FloorHeatMapEvent" class="com.esper.event.object.FloorHeatMap"/>
+    
+    <event-type name="DealsEvent" class="com.esper.event.object.Deals"/>
+    
+</esper-configuration>

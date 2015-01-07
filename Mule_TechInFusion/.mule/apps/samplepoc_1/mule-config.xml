@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:jdbc-ee="http://www.mulesoft.org/schema/mule/ee/jdbc" xmlns:json="http://www.mulesoft.org/schema/mule/json" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:niohttp="http://www.mulesoft.org/schema/mule/nio-http"
+    xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
+    xmlns:esper="http://www.mulesoft.org/schema/mule/esper"
+    xmlns:spring="http://www.springframework.org/schema/beans"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/nio-http http://www.mulesoft.org/schema/mule/nio-http/current/mule-nio-http.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.3/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/esper http://www.mulesoft.org/schema/mule/esper/current/mule-esper.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.1/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/jdbc http://www.mulesoft.org/schema/mule/ee/jdbc/current/mule-jdbc-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd" version="EE-3.4.0">
+
+	<!-- Esper Module Starts -->
+
+	<!-- 
+	* Instantiation of Esper enginer for "esper-config.xml" Configuration.
+	-->
+	<esper:config name="esperModule" configuration="esper-config.xml" doc:name="Esper"/>
+
+	<!-- 
+	* nio http connector for WebSocket connectivity.
+	-->
+    <niohttp:connector name="httpConnector" />
+ 
+ 	<!-- 
+	* Object to JSON transformer for Bill output
+	-->
+	<json:mapper name="billMapper">
+    	<json:mixin mixinClass="com.esper.event.object.Bill"
+                    targetClass="com.esper.event.object.Bill"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="billToJSON" 
+    									mapper-ref="billMapper" 
+    									sourceClass="com.esper.event.object.Bill" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Object to JSON transformer for Transaction Log output
+	-->
+	<json:mapper name="transactionLogMapper">
+    	<json:mixin mixinClass="com.esper.event.object.TransactionLog"
+                    targetClass="com.esper.event.object.TransactionLog"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="transactionLogToJSON" 
+    									mapper-ref="transactionLogMapper" 
+    									sourceClass="com.esper.event.object.TransactionLog" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Object to JSON transformer for Customer output
+	-->
+	<json:mapper name="customerMapper">
+    	<json:mixin mixinClass="com.esper.event.object.Customer"
+                    targetClass="com.esper.event.object.Customer"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="customerToJSON" 
+    									mapper-ref="customerMapper" 
+    									sourceClass="com.esper.event.object.Customer" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Bill events
+	-->
+    
+    <flow name="BillEventSubscriber" doc:name="BillEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8091/websocket/billevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <component class="com.mule.connector.outbound.UserActionTransformer" doc:name="Java"/>
+             
+        <choice doc:name="Choice">
+            <when expression="#[message.payload.userAction=='SignIn']">
+                <custom-processor class="com.mule.connector.outbound.BillEventSubscriber" doc:name="Custom Processor">
+                    <spring:property name="esperModule" ref="esperModule"/>
+                    <spring:property name="httpConnector" ref="httpConnector"/>
+                    <spring:property name="billToJSON" ref="billToJSON"/>
+                    <spring:property name="transactionLogToJSON" ref="transactionLogToJSON"/>
+                    <spring:property name="customerToJSON" ref="customerToJSON"/>
+                </custom-processor>
+            </when>
+            <when expression="#[message.payload.userAction=='SignOut']">
+            	<component class="com.mule.connector.outbound.CustomerSignOutHandler" doc:name="Java"/>
+            	 <esper:send eventName="SignOutEvent" eventPayload-ref="#[message.payload]" config-ref="esperModule" doc:name="Esper"/>
+            </when>
+        </choice>
+        
+    </flow>
+    
+ 	<!-- 
+	* Object to JSON transformer for Alert Message output
+	-->
+	<json:mapper name="alertMessageCCMapper">
+    	<json:mixin mixinClass="com.esper.event.object.AlertMessageCC"
+                    targetClass="com.esper.event.object.AlertMessageCC"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="alertMessageCCToJSON" 
+    									mapper-ref="alertMessageCCMapper" 
+    									sourceClass="com.esper.event.object.AlertMessageCC" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Bill events
+	-->
+    <flow name="AlertMessageCCEventSubscriber" doc:name="AlertMessageCCEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8092/websocket/alertmessageccevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.AlertMessageCCEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="alertMessageCCToJSON" ref="alertMessageCCToJSON" />
+        </custom-processor>
+        
+    </flow>
+  
+ 	<!-- 
+	* Object to JSON transformer for Alert Message output
+	-->
+	<json:mapper name="alertMessageOMMapper">
+    	<json:mixin mixinClass="com.esper.event.object.AlertMessageOM"
+                    targetClass="com.esper.event.object.AlertMessageOM"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="alertMessageOMToJSON" 
+    									mapper-ref="alertMessageOMMapper" 
+    									sourceClass="com.esper.event.object.AlertMessageOM" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Bill events
+	-->
+    <flow name="AlertMessageOMEventSubscriber" doc:name="AlertMessageOMEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8093/websocket/alertmessageomevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.AlertMessageOMEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="alertMessageOMToJSON" ref="alertMessageOMToJSON" />
+        </custom-processor>
+        
+    </flow>
+  
+ 	<!-- 
+	* Object to JSON transformer for Top Buyer List Message output
+	-->
+	<json:mapper name="topBuyerListMapper">
+    	<json:mixin mixinClass="com.esper.event.object.TopBuyerList"
+                    targetClass="com.esper.event.object.TopBuyerList"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="topBuyerListToJSON" 
+    									mapper-ref="topBuyerListMapper" 
+    									sourceClass="com.esper.event.object.TopBuyerList" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Top Buyer List events
+	-->
+    <flow name="TopBuyerListEventSubscriber" doc:name="TopBuyerListEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8093/websocket/topbuyerlistevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.TopBuyerListEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="topBuyerListToJSON" ref="topBuyerListToJSON" />
+        </custom-processor>
+        
+    </flow>
+
+ 	<!-- 
+	* Object to JSON transformer for Top Selling Item List Message output
+	-->
+	<json:mapper name="topSellingItemListMapper">
+    	<json:mixin mixinClass="com.esper.event.object.TopSellingItemList"
+                    targetClass="com.esper.event.object.TopSellingItemList"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="topSellingItemListToJSON" 
+    									mapper-ref="topSellingItemListMapper" 
+    									sourceClass="com.esper.event.object.TopSellingItemList" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Top Selling Item List events
+	-->
+    <flow name="TopSellingItemListEventSubscriber" doc:name="TopSellingItemListEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8094/websocket/topsellingitemlistevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.TopSellingItemListEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="topSellingItemListToJSON" ref="topSellingItemListToJSON" />
+        </custom-processor>
+        
+    </flow>
+
+ 	<!-- 
+	* Object to JSON transformer for Low Stock List Message output
+	-->
+	<json:mapper name="lowStockListMapper">
+    	<json:mixin mixinClass="com.esper.event.object.LowStockList"
+                    targetClass="com.esper.event.object.LowStockList"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="lowStockListToJSON" 
+    									mapper-ref="lowStockListMapper" 
+    									sourceClass="com.esper.event.object.LowStockList" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Low Stock List events
+	-->
+    <flow name="LowStockListEventSubscriber" doc:name="LowStockListEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8095/websocket/lowstocklistevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.LowStockListEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="lowStockListToJSON" ref="lowStockListToJSON" />
+        </custom-processor>
+        
+    </flow>
+
+
+ 	<!-- 
+	* Object to JSON transformer for Heat Map Message output
+	-->
+	<json:mapper name="heatMapListMapper">
+    	<json:mixin mixinClass="com.esper.event.object.FloorHeatMap"
+                    targetClass="com.esper.event.object.FloorHeatMap"/>
+	</json:mapper>
+ 
+    <json:object-to-json-transformer name="heatMapListToJSON" 
+    									mapper-ref="heatMapListMapper" 
+    									sourceClass="com.esper.event.object.FloorHeatMap" 
+    									doc:name="Object to JSON"/>
+    
+    <!-- 
+	* Mule flow to connect Node.js client to esper through WebSockets - Low Stock List events
+	-->
+    <flow name="HeatMapEventSubscriber" doc:name="HeatMapEventSubscriber">
+    
+        <niohttp:inbound-endpoint address="niohttp://localhost:8096/websocket/heatmapevent" exchange-pattern="one-way">
+            <niohttp:websocket path="events" />
+        </niohttp:inbound-endpoint>
+        
+        <custom-processor class="com.mule.connector.outbound.HeatMapEventSubscriber" doc:name="Custom Processor">
+            <spring:property name="esperModule" ref="esperModule" />
+            <spring:property name="httpConnector" ref="httpConnector" />
+            <spring:property name="heatMapListToJSON" ref="heatMapListToJSON" />
+        </custom-processor>
+        
+    </flow>
+
+	<!-- Esper Module Ends -->
+
+
+	<!-- Inbound Connectors for Events -->
+
+    <flow name="CheckOutEventProducer" doc:name="CheckOutEventProducer">
+        
+        <http:inbound-endpoint doc:description="This endpoint receives an HTTP message." doc:name="HTTP" exchange-pattern="one-way" host="localhost" port="8099"/>
+        
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        
+        <component doc:name="Java" class="com.mule.connector.inbound.CheckOutEventProducer"/>
+        
+        <esper:send eventName="CheckOutEvent" eventPayload-ref="#[message.payload]" config-ref="esperModule" doc:name="Esper"/>
+        
+    </flow>
+    
+
+    <flow name="CustomerMovedIntoSegEventProducer" doc:name="CustomerMovedIntoSegEventProducer">
+        
+        <http:inbound-endpoint doc:description="This endpoint receives an HTTP message." doc:name="HTTP" exchange-pattern="one-way" host="localhost" port="8098"/>
+        
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        
+        <component doc:name="Java" class="com.mule.connector.inbound.CustomerMovedIntoSegEventProducer"/>
+        
+        <esper:send eventName="CustomerMovedIntoSegmentEvent" eventPayload-ref="#[message.payload]" config-ref="esperModule" doc:name="Esper"/>
+        
+    </flow>
+    
+    <flow name="DealEventProducer" doc:name="DealEventProducer">
+        
+        <http:inbound-endpoint doc:description="This endpoint receives an HTTP message." doc:name="HTTP" exchange-pattern="one-way" host="localhost" port="8097"/>
+        
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        
+        <component doc:name="Java" class="com.mule.connector.inbound.DealEventProducer"/>
+        
+        <esper:send eventName="DealsEvent" eventPayload-ref="#[message.payload]" config-ref="esperModule" doc:name="Esper"/>
+        
+    </flow>
+    
+</mule>

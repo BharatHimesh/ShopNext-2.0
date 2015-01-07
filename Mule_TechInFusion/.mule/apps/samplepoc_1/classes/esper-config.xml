@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esper-configuration 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		    xmlns="http://www.espertech.com/schema/esper"
+		    xsi:schemaLocation="http://www.espertech.com/schema/esper http://www.espertech.com/schema/esper/esper-configuration-4.0.xsd">
+
+	<event-type name="ItemEvent" class="com.esper.event.object.Item"/>
+
+	<event-type name="CheckOutEvent" class="com.esper.event.object.CheckOut"/>
+    
+    <event-type name="BillEvent" class="com.esper.event.object.Bill"/>
+    
+    <event-type name="AlertMessageOMEvent" class="com.esper.event.object.AlertMessageOM"/>
+    
+    <event-type name="AlertMessageCCEvent" class="com.esper.event.object.AlertMessageCC"/>
+    
+    <event-type name="TopBuyerListEvent" class="com.esper.event.object.TopBuyerList"/>
+    
+    <event-type name="SignInEvent" class="com.esper.event.object.SignIn"/>
+    
+    <event-type name="SignOutEvent" class="com.esper.event.object.SignOut"/>
+    
+    <event-type name="HeatMapEvent">
+        <xml-dom root-element-name="HeatMap" />
+    </event-type>
+    
+    <event-type name="UserSignInEvent">
+        <xml-dom root-element-name="UserSignIn" />
+    </event-type>
+	
+	<event-type name="BestDealsEvent">
+        <xml-dom root-element-name="BestDeals" />
+    </event-type>
+    
+</esper-configuration>

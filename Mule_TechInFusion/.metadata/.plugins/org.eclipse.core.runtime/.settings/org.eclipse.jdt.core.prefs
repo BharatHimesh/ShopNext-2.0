@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.core.classpathVariable.ECLIPSE_HOME=C\:/Softwares/MuleStudio
+org.eclipse.jdt.core.classpathVariable.JRE_LIB=C\:/Program Files/Java/jdk1.7.0_51/jre/lib/rt.jar
+org.eclipse.jdt.core.classpathVariable.JRE_SRC=C\:/Program Files/Java/jdk1.7.0_51/src.zip
+org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
+org.eclipse.jdt.core.classpathVariable.JUNIT_HOME=C\:/Softwares/MuleStudio/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/
+org.eclipse.jdt.core.classpathVariable.M2_REPO=C\:/Users/jck/.m2/repository
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.7
+org.eclipse.jdt.core.compiler.compliance=1.7
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.source=1.7
+org.eclipse.jdt.core.userLibrary.ReferenceLib=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="/samplepoc_1/lib/mule-module-esper-1.3.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/mule-transport-nio-http-3.3.1-20130410.212913-133.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/mule-transport-nio-tcp-3.3.1-20130410.212856-136.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/netty-3.4.5.Final.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/async-http-client-1.7.4.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esper-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-csv-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-db-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-http-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-socket-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-springjms-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/esperio-stax-4.0.0.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/commons-logging-1.1.1.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/log4j-1.2.16.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/antlr-runtime-3.2.jar"/>\r\n\t<archive path\="/samplepoc_1/lib/cglib-nodep-2.2.jar"/>\r\n</userlibrary>\r\n

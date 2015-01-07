@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mule-config">
+    <global-element type="http://www.mulesoft.org/schema/mule/esper/config" name="Esper" entity-id="Esper#1">
+        <properties>
+            <property value="esperModule" name="name"/>
+            <property value="esper-config.xml" name="configuration"/>
+            <property value="1" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="2" unknownName="httpConnector" description="false" entity-id="global-unknown#1">
+        <content>&lt;niohttp:connector xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; name=&quot;httpConnector&quot;/&gt;</content>
+    </global-unknown>
+    <global-unknown index="3" unknownName="billMapper" description="false" entity-id="global-unknown#2">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;billMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.Bill&quot; targetClass=&quot;com.esper.event.object.Bill&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#1">
+        <properties>
+            <property value="com.esper.event.object.Bill" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="billToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="billMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="5" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="6" unknownName="transactionLogMapper" description="false" entity-id="global-unknown#3">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;transactionLogMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.TransactionLog&quot; targetClass=&quot;com.esper.event.object.TransactionLog&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#2">
+        <properties>
+            <property value="com.esper.event.object.TransactionLog" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="transactionLogToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="transactionLogMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="8" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="9" unknownName="customerMapper" description="false" entity-id="global-unknown#4">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;customerMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.Customer&quot; targetClass=&quot;com.esper.event.object.Customer&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#3">
+        <properties>
+            <property value="com.esper.event.object.Customer" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="customerToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="customerMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="11" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="27" unknownName="alertMessageCCMapper" description="false" entity-id="global-unknown#5">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;alertMessageCCMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.AlertMessageCC&quot; targetClass=&quot;com.esper.event.object.AlertMessageCC&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#4">
+        <properties>
+            <property value="com.esper.event.object.AlertMessageCC" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="alertMessageCCToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="alertMessageCCMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="29" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="37" unknownName="alertMessageOMMapper" description="false" entity-id="global-unknown#6">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;alertMessageOMMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.AlertMessageOM&quot; targetClass=&quot;com.esper.event.object.AlertMessageOM&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#5">
+        <properties>
+            <property value="com.esper.event.object.AlertMessageOM" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="alertMessageOMToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="alertMessageOMMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="39" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="47" unknownName="topBuyerListMapper" description="false" entity-id="global-unknown#7">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;topBuyerListMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.TopBuyerList&quot; targetClass=&quot;com.esper.event.object.TopBuyerList&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#6">
+        <properties>
+            <property value="com.esper.event.object.TopBuyerList" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="topBuyerListToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="topBuyerListMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="49" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="57" unknownName="topSellingItemListMapper" description="false" entity-id="global-unknown#8">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;topSellingItemListMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.TopSellingItemList&quot; targetClass=&quot;com.esper.event.object.TopSellingItemList&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#7">
+        <properties>
+            <property value="com.esper.event.object.TopSellingItemList" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="topSellingItemListToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="topSellingItemListMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="59" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="67" unknownName="lowStockListMapper" description="false" entity-id="global-unknown#9">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;lowStockListMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.LowStockList&quot; targetClass=&quot;com.esper.event.object.LowStockList&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#8">
+        <properties>
+            <property value="com.esper.event.object.LowStockList" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="lowStockListToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="lowStockListMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="69" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <global-unknown index="77" unknownName="heatMapListMapper" description="false" entity-id="global-unknown#10">
+        <content>&lt;json:mapper xmlns:json=&quot;http://www.mulesoft.org/schema/mule/json&quot; name=&quot;heatMapListMapper&quot;&gt;
+    	&lt;json:mixin mixinClass=&quot;com.esper.event.object.FloorHeatMap&quot; targetClass=&quot;com.esper.event.object.FloorHeatMap&quot;/&gt;
+	&lt;/json:mapper&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#9">
+        <properties>
+            <property value="com.esper.event.object.FloorHeatMap" name="sourceClass"/>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property value="heatMapListToJSON" name="name"/>
+            <property name="encoding"/>
+            <property value="heatMapListMapper" name="mapper-ref"/>
+            <property name="mimeType"/>
+            <property value="79" name="auxiliary;index"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="BillEventSubscriber" entity-id="b3d29e82-1ddb-4d19-b991-532da2e14376">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="12" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="13" description="false" entity-id="unknown#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8091/websocket/billevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="Java#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.UserActionTransformer" name="class"/>
+                    <property value="15" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <splitter index="16" type="org.mule.tooling.ui.modules.core.pattern.cbr" name="Choice" entity-id="Choice#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property-collection name="92a40870-610a-4ed8-a4fb-817c4bad5c74">
+                        <property value="#[message.payload.userAction=='SignIn']" name="choice.expression"/>
+                        <property-collection name="choice.attributes">
+                            <property value="#[message.payload.userAction=='SignIn']" name="expression"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="447fb5ca-a033-4561-9eb8-8a50752efd6d">
+                        <property value="#[message.payload.userAction=='SignOut']" name="choice.expression"/>
+                        <property-collection name="choice.attributes">
+                            <property value="#[message.payload.userAction=='SignOut']" name="expression"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+                <pattern type="org.mule.tooling.ui.modules.core.pattern.cbr" name="Choice" entity-id="Choice#2"/>
+                <compartment entity-id="compartment#1">
+                    <lane isChoiceOtherwiseLane="false" index="18" hadOnlyOneElement="false" entity-id="92a40870-610a-4ed8-a4fb-817c4bad5c74">
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#1">
+                            <graphicalData height="0" width="0" y="0" x="0"/>
+                            <properties>
+<property value="com.mule.connector.outbound.BillEventSubscriber" name="class"/>
+<property value="18" name="auxiliary;index"/>
+<property-collection name="@http://www.springframework.org/schema/beans/property;0">
+    <property value="esperModule" name="ref"/>
+    <property value="esperModule" name="name"/>
+    <property value="19" name="auxiliary;index"/>
+    <property value="19" name="auxiliary;wrapIn"/>
+</property-collection>
+<property-collection name="@http://www.springframework.org/schema/beans/property;1">
+    <property value="httpConnector" name="ref"/>
+    <property value="httpConnector" name="name"/>
+    <property value="20" name="auxiliary;index"/>
+    <property value="20" name="auxiliary;wrapIn"/>
+</property-collection>
+<property-collection name="@http://www.springframework.org/schema/beans/property;2">
+    <property value="billToJSON" name="ref"/>
+    <property value="billToJSON" name="name"/>
+    <property value="21" name="auxiliary;index"/>
+    <property value="21" name="auxiliary;wrapIn"/>
+</property-collection>
+<property-collection name="@http://www.springframework.org/schema/beans/property;3">
+    <property value="transactionLogToJSON" name="ref"/>
+    <property value="transactionLogToJSON" name="name"/>
+    <property value="22" name="auxiliary;index"/>
+    <property value="22" name="auxiliary;wrapIn"/>
+</property-collection>
+<property-collection name="@http://www.springframework.org/schema/beans/property;4">
+    <property value="customerToJSON" name="ref"/>
+    <property value="customerToJSON" name="name"/>
+    <property value="23" name="auxiliary;index"/>
+    <property value="23" name="auxiliary;wrapIn"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane isChoiceOtherwiseLane="false" index="25" hadOnlyOneElement="false" entity-id="447fb5ca-a033-4561-9eb8-8a50752efd6d">
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="Java#2">
+                            <graphicalData height="0" width="0" y="0" x="0"/>
+                            <properties>
+<property value="com.mule.connector.outbound.CustomerSignOutHandler" name="class"/>
+<property value="25" name="auxiliary;index"/>
+                            </properties>
+                        </pattern>
+                        <pattern type="http://www.mulesoft.org/schema/mule/esper/esper-connector" name="Esper" entity-id="Esper#2">
+                            <graphicalData height="0" width="0" y="0" x="0"/>
+                            <properties>
+<property value="#[message.payload]" name="eventPayload-ref"/>
+<property value="http://www.mulesoft.org/schema/mule/esper/send" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+<property value="SignOutEvent" name="eventName"/>
+<property value="esperModule" name="config-ref"/>
+<property value="26" name="auxiliary;index"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane isChoiceOtherwiseLane="true" index="0" hadOnlyOneElement="false" entity-id="0ad39383-ce6b-42f0-98bc-6adc412a3d9f"/>
+                </compartment>
+            </splitter>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="AlertMessageCCEventSubscriber" entity-id="385876f4-2989-4485-b257-e67c315ff1e3">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="30" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#2">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="31" description="false" entity-id="unknown#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8092/websocket/alertmessageccevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.AlertMessageCCEventSubscriber" name="class"/>
+                    <property value="33" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="34" name="auxiliary;index"/>
+                        <property value="34" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="35" name="auxiliary;index"/>
+                        <property value="35" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="alertMessageCCToJSON" name="ref"/>
+                        <property value="alertMessageCCToJSON" name="name"/>
+                        <property value="36" name="auxiliary;index"/>
+                        <property value="36" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="AlertMessageOMEventSubscriber" entity-id="f903806b-d689-41e9-8821-a8b840c5eaf4">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="40" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#3">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="41" description="false" entity-id="unknown#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8093/websocket/alertmessageomevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.AlertMessageOMEventSubscriber" name="class"/>
+                    <property value="43" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="44" name="auxiliary;index"/>
+                        <property value="44" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="45" name="auxiliary;index"/>
+                        <property value="45" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="alertMessageOMToJSON" name="ref"/>
+                        <property value="alertMessageOMToJSON" name="name"/>
+                        <property value="46" name="auxiliary;index"/>
+                        <property value="46" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="TopBuyerListEventSubscriber" entity-id="4be3d960-f0f6-40f0-b4a1-753c6b885870">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="50" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#4">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="51" description="false" entity-id="unknown#4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8093/websocket/topbuyerlistevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.TopBuyerListEventSubscriber" name="class"/>
+                    <property value="53" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="54" name="auxiliary;index"/>
+                        <property value="54" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="55" name="auxiliary;index"/>
+                        <property value="55" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="topBuyerListToJSON" name="ref"/>
+                        <property value="topBuyerListToJSON" name="name"/>
+                        <property value="56" name="auxiliary;index"/>
+                        <property value="56" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="TopSellingItemListEventSubscriber" entity-id="11944696-dafa-475b-b931-08bf2aab3aa8">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="60" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#5">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="61" description="false" entity-id="unknown#5">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8094/websocket/topsellingitemlistevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#5">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.TopSellingItemListEventSubscriber" name="class"/>
+                    <property value="63" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="64" name="auxiliary;index"/>
+                        <property value="64" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="65" name="auxiliary;index"/>
+                        <property value="65" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="topSellingItemListToJSON" name="ref"/>
+                        <property value="topSellingItemListToJSON" name="name"/>
+                        <property value="66" name="auxiliary;index"/>
+                        <property value="66" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="LowStockListEventSubscriber" entity-id="6d4b6724-0a44-45c1-9708-078937c3b891">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="70" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#6">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="71" description="false" entity-id="unknown#6">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8095/websocket/lowstocklistevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#6">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.LowStockListEventSubscriber" name="class"/>
+                    <property value="73" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="74" name="auxiliary;index"/>
+                        <property value="74" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="75" name="auxiliary;index"/>
+                        <property value="75" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="lowStockListToJSON" name="ref"/>
+                        <property value="lowStockListToJSON" name="name"/>
+                        <property value="76" name="auxiliary;index"/>
+                        <property value="76" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="HeatMapEventSubscriber" entity-id="5affbfb4-28c0-44b1-9cd4-30d1231fef3d">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="80" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#7">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <unknown index="81" description="false" entity-id="unknown#7">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <content>&lt;niohttp:inbound-endpoint xmlns:niohttp=&quot;http://www.mulesoft.org/schema/mule/nio-http&quot; address=&quot;niohttp://localhost:8096/websocket/heatmapevent&quot; exchange-pattern=&quot;one-way&quot;&gt;
+            &lt;niohttp:websocket path=&quot;events&quot;/&gt;
+        &lt;/niohttp:inbound-endpoint&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Custom Processor" entity-id="Custom Processor#7">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.outbound.HeatMapEventSubscriber" name="class"/>
+                    <property value="83" name="auxiliary;index"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property value="esperModule" name="ref"/>
+                        <property value="esperModule" name="name"/>
+                        <property value="84" name="auxiliary;index"/>
+                        <property value="84" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                        <property value="httpConnector" name="ref"/>
+                        <property value="httpConnector" name="name"/>
+                        <property value="85" name="auxiliary;index"/>
+                        <property value="85" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                        <property value="heatMapListToJSON" name="ref"/>
+                        <property value="heatMapListToJSON" name="name"/>
+                        <property value="86" name="auxiliary;index"/>
+                        <property value="86" name="auxiliary;wrapIn"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="CheckOutEventProducer" entity-id="3031183d-7082-4428-b35c-e035394d0da0">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="87" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#8">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8099" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="httpLabel"/>
+                    <property name="address"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property value="88" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                </properties>
+                <description>This endpoint receives an HTTP message.</description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/byte-array-to-string-transformer" name="Byte Array to String" entity-id="Byte Array to String#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mimeType"/>
+                    <property value="89" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="Java#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.inbound.CheckOutEventProducer" name="class"/>
+                    <property value="90" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/esper/esper-connector" name="Esper" entity-id="Esper#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="#[message.payload]" name="eventPayload-ref"/>
+                    <property value="http://www.mulesoft.org/schema/mule/esper/send" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="CheckOutEvent" name="eventName"/>
+                    <property value="esperModule" name="config-ref"/>
+                    <property value="91" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="CustomerMovedIntoSegEventProducer" entity-id="f8486d0a-a0a6-4aff-950a-67b8f73a4be2">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="92" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#9">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8098" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="httpLabel"/>
+                    <property name="address"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property value="93" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                </properties>
+                <description>This endpoint receives an HTTP message.</description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/byte-array-to-string-transformer" name="Byte Array to String" entity-id="Byte Array to String#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mimeType"/>
+                    <property value="94" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="Java#4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.inbound.CustomerMovedIntoSegEventProducer" name="class"/>
+                    <property value="95" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/esper/esper-connector" name="Esper" entity-id="Esper#4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="#[message.payload]" name="eventPayload-ref"/>
+                    <property value="http://www.mulesoft.org/schema/mule/esper/send" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="CustomerMovedIntoSegmentEvent" name="eventName"/>
+                    <property value="esperModule" name="config-ref"/>
+                    <property value="96" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="DealEventProducer" entity-id="adda727e-40b8-48c5-a8bb-f3d044dc024d">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="97" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#10">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8097" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="httpLabel"/>
+                    <property name="address"/>
+                    <property name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property value="98" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                </properties>
+                <description>This endpoint receives an HTTP message.</description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/byte-array-to-string-transformer" name="Byte Array to String" entity-id="Byte Array to String#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mimeType"/>
+                    <property value="99" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="Java#5">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="com.mule.connector.inbound.DealEventProducer" name="class"/>
+                    <property value="100" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/esper/esper-connector" name="Esper" entity-id="Esper#5">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="#[message.payload]" name="eventPayload-ref"/>
+                    <property value="http://www.mulesoft.org/schema/mule/esper/send" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="DealsEvent" name="eventName"/>
+                    <property value="esperModule" name="config-ref"/>
+                    <property value="101" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+</mule-configuration>

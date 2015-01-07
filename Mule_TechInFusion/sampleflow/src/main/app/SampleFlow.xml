@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
+    xmlns:esper="http://www.mulesoft.org/schema/mule/esper"
+    xmlns:spring="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.3/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/esper http://www.mulesoft.org/schema/mule/esper/current/mule-esper.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" version="EE-3.4.0">
+
+    <flow name="esperListner" doc:name="signupEventsGenerator">
+        <esper:listen statement="" config-ref=""/>
+    </flow>
+</mule>

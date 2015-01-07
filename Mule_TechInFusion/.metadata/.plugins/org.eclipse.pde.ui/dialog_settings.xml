@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="FeatureImportWizard">
+		<item value="false" key="notbinary"/>
+		<item value="" key="droplocation2"/>
+		<item value="C:\Softwares\MuleStudio" key="droplocation1"/>
+		<item value="C:\Softwares\MuleStudio" key="droplocation0"/>
+		<item value="false" key="doother"/>
+	</section>
+	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="PluginImportWizard">
+	</section>
+	<section name="pde_compiler_errorwarnings_block">
+		<item value="true" key="3"/>
+		<item value="true" key="2"/>
+		<item value="true" key="1"/>
+		<item value="true" key="0"/>
+		<item value="true" key="4"/>
+	</section>
+</section>
